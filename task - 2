@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Function to get the computer's choice
+int getComputerChoice() {
+    return rand() % 3; // Returns a random number between 0 and 2
+}
+
+// Function to determine the winner
+void determineWinner(int userChoice, int computerChoice) {
+    if (userChoice == computerChoice) {
+        printf("It's a tie!\n");
+    } else if ((userChoice == 0 && computerChoice == 2) ||
+               (userChoice == 1 && computerChoice == 0) ||
+               (userChoice == 2 && computerChoice == 1)) {
+        printf("You win!\n");
+    } else {
+        printf("Computer wins!\n");
+    }
+}
+
+// Function to display the choice
+void displayChoice(int choice) {
+    switch (choice) {
+        case 0: printf("Rock"); break;
+        case 1: printf("Paper"); break;
+        case 2: printf("Scissors"); break;
+    }
+}
+
+int main() {
+    int userChoice, computerChoice;
+    char playAgain;
+
+    // Seed the random number generator
+    srand(time(NULL));
+
+    do {
+        // Get user input
+        printf("Enter your choice (0 for Rock, 1 for Paper, 2 for Scissors): ");
+        scanf("%d", &userChoice);
+
+        // Validate user input
+        if (userChoice < 0 || userChoice > 2) {
+            printf("Invalid choice. Please enter 0, 1, or 2.\n");
+            continue;
+        }
+
+        // Get computer's choice
+        computerChoice = getComputerChoice();
+
+        // Display choices
+        printf("You chose: ");
+        displayChoice(userChoice);
+        printf("\n");
+
+        printf("Computer chose: ");
+        displayChoice(computerChoice);
+        printf("\n");
+
+        // Determine the winner
+        determineWinner(userChoice, computerChoice);
+
+        // Ask if the user wants to play again
+        printf("Do you want to play again? (y/n): ");
+        scanf(" %c", &playAgain); // Notice the space before %c to ignore whitespace characters
+
+    } while (playAgain == 'y' || playAgain == 'Y');
+
+    printf("Thanks for playing!\n");
+
+    return 0;
+}
